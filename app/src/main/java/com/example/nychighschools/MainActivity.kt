@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -66,11 +68,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NYCHighSchoolsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 
-                    MyApp()
-
+                NYCHighSchoolsTheme {
+                    MyApp(modifier = Modifier.fillMaxSize())
                 }
             }
         }
@@ -79,34 +79,39 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyApp() {
+fun MyApp(
+    modifier: Modifier = Modifier,
+) {
 
 
     val schools = mutableListOf<School>()
-    //there is definetly  a better way of saving wich school is selected but this is the first aproach that comes to mind I will update it if possible
+    //there is definetly  a better way of saving which school is selected but this is the first approach that comes to mind I will update it if possible
     var selectedSchool by rememberSaveable { mutableStateOf(-1) }
 
     //a hacky way to get a big list
-    for (i in 1..100) {
-        schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
-        schools.add(School(schoolName = "Liberation Diploma Plus High School", location = "2865 West 19th Street, Brooklyn, NY 11224 (40.576976, -73.985413)", buildingCode = "K728"))
-        schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
+      for (i in 1..100) {
+    schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
+      schools.add(School(schoolName = "Liberation Diploma Plus High School", location = "2865 West 19th Street, Brooklyn, NY 11224 (40.576976, -73.985413)", buildingCode = "K728"))
+      schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
 
-    }
-
-    if (selectedSchool >= 0) {
-        SchoolDetails(school = schools[selectedSchool], onBackClicked = { selectedSchool = -1 }, modifier = Modifier)
-    } else {
-        LazyColumn {
-            itemsIndexed(schools) { index, school ->
-                SchoolCard(school, modifier = Modifier.clickable {
-                    Log.d("Jon", "selectedSchool: $selectedSchool")
-                    selectedSchool = index;
-                    //  schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
-                })
+     }
+    Surface(modifier) {
+        if (selectedSchool >= 0) {
+            SchoolDetails(school = schools[selectedSchool], onBackClicked = { selectedSchool = -1 }, modifier = Modifier)
+        } else {
+            LazyColumn {
+                itemsIndexed(schools) { index, school ->
+                    SchoolCard(school, modifier = Modifier.clickable {
+                        Log.d("Jon", "selectedSchool: $selectedSchool")
+                        selectedSchool = index;
+                        //  schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
+                    })
+                }
             }
         }
     }
+
+
 
 
 }
@@ -216,8 +221,6 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
 private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
 
-
-
     Column {
 
 
@@ -268,7 +271,6 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
                 }
 
 
-
             }
         }
 
@@ -283,18 +285,23 @@ fun SchoolDetails(
     school: School,
     modifier: Modifier, onBackClicked: () -> Unit,
 ) {
+    Column() {
+        Card(
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.background
+            ),
+            modifier = modifier
+                .padding(vertical = 4.dp, horizontal = 8.dp)
+                .shadow(elevation = 8.dp)
+                .clickable { onBackClicked() }
+        ) {
+            CardContentDetails(school )
+        }
 
-
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
-        modifier = Modifier
-            .padding(vertical = 4.dp, horizontal = 8.dp)
-            .shadow(elevation = 8.dp).clickable{onBackClicked()}
-    ) {
-        CardContentDetails(school, modifier)
+       
     }
+
+
 }
 
 
@@ -314,5 +321,5 @@ fun SchoolDetailsPreview() {
     schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
 
 
-    SchoolDetails(school = schools[0], onBackClicked = {  }, modifier = Modifier)
+    SchoolDetails(school = schools[0], onBackClicked = { }, modifier = Modifier)
 }
