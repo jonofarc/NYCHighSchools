@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.nychighschools.models.School
+import com.example.nychighschools.ui.Utils
 import com.example.nychighschools.ui.theme.NYCHighSchoolsTheme
 
 
@@ -49,6 +50,8 @@ fun MyApp(
         schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
 
     }
+
+    Utils().loadCSV()
     Surface(modifier) {
         if (selectedSchool >= 0) {
             SchoolDetails(school = schools[selectedSchool], onBackClicked = { selectedSchool = -1 }, modifier = Modifier)
