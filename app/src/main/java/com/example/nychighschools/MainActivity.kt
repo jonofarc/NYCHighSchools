@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -67,7 +68,8 @@ class MainActivity : ComponentActivity() {
 fun SetUi() {
 
 
-    val schools = mutableListOf<School>()
+    //val schools = mutableListOf<School>()
+    val schools = remember { mutableStateListOf<School>()}
 
     //a hacky way to get a big list
     for (i in 1..100) {
@@ -79,7 +81,9 @@ fun SetUi() {
 
     LazyColumn {
         items(schools) { school ->
-            SchoolCard(school)
+            SchoolCard(school, modifier = Modifier.clickable {
+                schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)"))
+            })
         }
     }
 
@@ -87,6 +91,9 @@ fun SetUi() {
 
 @Composable
 fun SchoolCard(school: School, modifier: Modifier = Modifier) {
+
+    var isFavorite by remember{mutableStateOf(school.isFavorite)}
+
     Column {
 
 
@@ -106,7 +113,7 @@ fun SchoolCard(school: School, modifier: Modifier = Modifier) {
 
                 // We keep track if the message is expanded or not in this
                 // variable
-                var isFavorite by remember { mutableStateOf(false) }
+               // var isFavorite by remember { mutableStateOf(false) }
 
 
 
@@ -150,10 +157,11 @@ fun SchoolCard(school: School, modifier: Modifier = Modifier) {
 
 
                         Image(
-                            painter = painterResource(R.drawable.star), colorFilter = ColorFilter.tint(getIsFavoriteColor(school, isFavorite)),contentDescription = "isFavorite icon", modifier = Modifier
+                            painter = painterResource(R.drawable.star), colorFilter = ColorFilter.tint(getIsFavoriteColor( isFavorite)),contentDescription = "isFavorite icon", modifier = Modifier
                                 .clickable {
-                                    isFavorite = !isFavorite
+
                                     toggleIsFavorite(school)
+                                    isFavorite = school.isFavorite
                                 }
                                 .align(Alignment.Top)
                                 .size(16.dp)
@@ -178,8 +186,8 @@ fun toggleIsFavorite(school: School){
  school.isFavorite = !school.isFavorite
 }
 
-fun getIsFavoriteColor(school: School, isFavorite: Boolean): Color {
-    return  if (school.isFavorite || isFavorite) Color.Red else Color.Black
+fun getIsFavoriteColor(isFavorite: Boolean): Color {
+    return  if (isFavorite) Color.Red else Color.Black
 }
 
 @Preview(name = "Light Mode")
