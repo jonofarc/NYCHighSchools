@@ -20,6 +20,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +57,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent  {
+        setContent {
             NYCHighSchoolsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
@@ -68,8 +76,7 @@ class MainActivity : ComponentActivity() {
 fun SetUi() {
 
 
-    //val schools = mutableListOf<School>()
-    val schools = remember { mutableStateListOf<School>()}
+    val schools = remember { mutableStateListOf<School>() }
 
     //a hacky way to get a big list
     for (i in 1..100) {
@@ -92,7 +99,8 @@ fun SetUi() {
 @Composable
 fun SchoolCard(school: School, modifier: Modifier = Modifier) {
 
-    var isFavorite by remember{mutableStateOf(school.isFavorite)}
+
+    var isFavorite by rememberSaveable { mutableStateOf(false) }
 
     Column {
 
@@ -108,12 +116,9 @@ fun SchoolCard(school: School, modifier: Modifier = Modifier) {
                         .border(1.5.dp, MaterialTheme.colorScheme.primary)
                 )
 
-                // Add a horizontal space between the image and the column
+
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // We keep track if the message is expanded or not in this
-                // variable
-               // var isFavorite by remember { mutableStateOf(false) }
 
 
 
@@ -135,38 +140,33 @@ fun SchoolCard(school: School, modifier: Modifier = Modifier) {
 
                         )
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        if (school.buildingCode.isNotEmpty()) {
-                            Text(
-                                text = stringResource(R.string.building_code, school.buildingCode),
-                                modifier = modifier,
-                                color = MaterialTheme.colorScheme.secondary,
-                                style = MaterialTheme.typography.bodyMedium,
-
-                                )
-                        } else {
-                            Box(
-                                modifier = Modifier
+                    if (school.buildingCode.isNotEmpty()) {
+                        Text(
+                            text = stringResource(R.string.building_code, school.buildingCode),
+                            modifier = modifier,
+                            color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.bodyMedium,
 
                             )
+                    }
+
+
+
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        IconButton(
+                            onClick = { isFavorite = !isFavorite },
+                            modifier = Modifier
+                        ) {
+                            Icon(
+                                imageVector = if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
+                                contentDescription = stringResource(R.string.school_favourite),
+                                tint = if (isFavorite) Color.Red else Color.Gray
+                            )
                         }
-
-
-
-                        Image(
-                            painter = painterResource(R.drawable.star), colorFilter = ColorFilter.tint(getIsFavoriteColor( isFavorite)),contentDescription = "isFavorite icon", modifier = Modifier
-                                .clickable {
-
-                                    toggleIsFavorite(school)
-                                    isFavorite = school.isFavorite
-                                }
-                                .align(Alignment.Top)
-                                .size(16.dp)
-
-                        )
                     }
 
 
@@ -182,12 +182,9 @@ fun SchoolCard(school: School, modifier: Modifier = Modifier) {
 
 }
 
-fun toggleIsFavorite(school: School){
- school.isFavorite = !school.isFavorite
-}
 
 fun getIsFavoriteColor(isFavorite: Boolean): Color {
-    return  if (isFavorite) Color.Red else Color.Black
+    return if (isFavorite) Color.Red else Color.Black
 }
 
 @Preview(name = "Light Mode")

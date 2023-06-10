@@ -52,5 +52,4 @@ data class School(
     val earlyCollege: String = "",
     val geoEligibility: String = "",
     val schoolAccessibilityDescription: String = "",
-    var isFavorite: Boolean = false,
 )

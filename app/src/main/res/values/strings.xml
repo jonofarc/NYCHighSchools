@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NYC High Schools</string>
     <string name="building_code">Building Code: %1$s</string>
+    <string name="school_favourite">is this school a favourite</string>
 </resources>
