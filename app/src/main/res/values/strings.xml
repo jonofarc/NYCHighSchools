@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NYC High Schools</string>
+    <string name="building_code">Building Code: %1$s</string>
 </resources>
