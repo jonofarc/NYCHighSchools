@@ -38,7 +38,7 @@ import com.example.nychighschools.models.School
 
 
 @Composable
-fun SchoolsView(schools: MutableList<School>, onSchoolSelected: (index: Int) -> Unit) {
+fun SchoolsView(schools: List<School>, onSchoolSelected: (index: Int) -> Unit) {
     LazyColumn {
         itemsIndexed(schools) { index, school ->
             SchoolCard(school, modifier = Modifier.clickable {
@@ -165,5 +165,5 @@ fun SchoolsViewPreview() {
     }
 
 
-    SchoolsView(schools, onSchoolSelected = { })
+    SchoolsView(schools) { }
 }

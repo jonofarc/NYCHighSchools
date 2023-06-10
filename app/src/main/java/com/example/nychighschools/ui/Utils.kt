@@ -1,8 +1,12 @@
 package com.example.nychighschools.ui
 
 import android.util.Log
+import com.example.nychighschools.models.School
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -23,42 +27,26 @@ enum class Gender { MALE, FEMALE }
 
 class Utils {
 
-    fun loadCSV() {
-        CoroutineScope(Dispatchers.Main).launch {
-            //schools.addAll(parseCSV())
-            Log.d("jon", "Reading CSV")
-//            Thread.sleep(5000)
-            parseCSV()
-            Log.d("jon", "CSV Reading Finished")
-            // Use the parsed schools list
-        }
+
+    suspend fun loadCSV(): List<School> {
+        delay(5000)
+        return parseCSV()
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    suspend fun parseCSV() {
-        val csv = Csv { hasHeaderRecord = true }
+    fun parseCSV(): List<School> {
 
-        val records = listOf(
-            Person("Neo", "Thomas A. Anderson", Appearance(Gender.MALE, 37, 1.86)),
-            Person("Trinity", null, Appearance(Gender.FEMALE, null, 1.74))
-        )
-        val serialized = csv.encodeToString(ListSerializer(Person.serializer()), records)
-        Log.d("jon", serialized)
-        // nickname,name,appearance.gender,appearance.age,appearance.height
-        // Neo,Thomas A. Anderson,MALE,37,1.86
-        // Trinity,,FEMALE,,1.74
+        val csv = Csv { hasHeaderRecord = true; ignoreUnknownColumns = true }
+
 
         val input = """
-        nickname,appearance.gender,appearance.height,appearance.age,name
-        Neo,MALE,1.86,37,Thomas A. Anderson
-        Trinity,FEMALE,1.74,,
+        school_name,location,building_code,
+"Clinton School Writers & Artists, M.S. 260","10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)",M868,
     """.trimIndent()
-        val parsed = csv.decodeFromString(ListSerializer(Person.serializer()), input)
-        Log.d("jon", parsed.toString())
-        // [
-        //   Person(nickname=Neo, name=Thomas A. Anderson, appearance=Appearance(gender=MALE, age=37, height=1.86)),
-        //   Person(nickname=Trinity, name=null, appearance=Appearance(gender=FEMALE, age=null, height=1.74))
-        // ]
+        val parsed = csv.decodeFromString(ListSerializer(School.serializer()), input)
+
+        return parsed
+
     }
 
 }
