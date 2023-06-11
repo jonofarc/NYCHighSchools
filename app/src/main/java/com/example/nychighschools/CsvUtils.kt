@@ -44,16 +44,16 @@ class CsvUtils {
          * because the csv data is not one that will change constantly once the csv files are parsed save the results and just use the getters
          * to retrive the information this will avoid multiple unnecesary parses and the need to handle code in a async way
          */
-        schools = getSchoolsFromCSV(context, schoolsCsvFile)
-        satScores = getSatScoresFromCSV(context, satScoresCsvFile)
+        schools = getSchoolsFromCSV(context)
+        satScores = getSatScoresFromCSV(context)
 
     }
 
-    private suspend fun getSchoolsFromCSV(context: Context, fileName: String): MutableList<School> {
+    private fun getSchoolsFromCSV(context: Context): MutableList<School> {
 
 
         val schools = mutableListOf<School>()
-        val lines = loadCSV(context, fileName);
+        val lines = loadCSV(context, schoolsCsvFile);
 
 
         for (i in 1 until lines.size) {
@@ -67,11 +67,11 @@ class CsvUtils {
 
     }
 
-    private suspend fun getSatScoresFromCSV(context: Context, fileName: String): List<SatScores> {
+    private fun getSatScoresFromCSV(context: Context): List<SatScores> {
 
 
         val satScores = mutableListOf<SatScores>()
-        val lines = loadCSV(context, fileName);
+        val lines = loadCSV(context, satScoresCsvFile);
 
         for (i in 1 until lines.size) {
 
