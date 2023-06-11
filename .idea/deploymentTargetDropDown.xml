@@ -6,23 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Nask\.android\avd\Copy_of_android_9.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="729cce4b" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <targetSelectedWithDropDown>
-      <Target>
-        <type value="QUICK_BOOT_TARGET" />
-        <deviceKey>
-          <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Nask\.android\avd\Copy_of_android_9.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-06-10T23:46:46.653962400Z" />
+    <timeTargetWasSelectedWithDropDown value="2023-06-11T17:30:58.905119500Z" />
   </component>
 </project>

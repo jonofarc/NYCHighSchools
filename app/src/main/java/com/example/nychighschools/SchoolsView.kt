@@ -55,7 +55,7 @@ fun SchoolCard(school: School, modifier: Modifier) {
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = MaterialTheme.colorScheme.onSecondary
         ),
         modifier = modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
@@ -100,7 +100,7 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
                     text = school.schoolName,
                     modifier = modifier,
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.secondary,
                 )
 
                 Text(

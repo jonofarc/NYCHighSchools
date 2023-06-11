@@ -52,9 +52,26 @@ fun Loading() {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(text = "Loading, please wait")
+            Text(text = stringResource(R.string.loading))
             Spacer(modifier = Modifier.height(16.dp))
             CircularProgressIndicator()
+        }
+    }
+}
+
+
+@Composable
+fun NoSchoolsFound() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = stringResource(R.string.no_schools_found))
         }
     }
 }
@@ -63,5 +80,11 @@ fun Loading() {
 @Preview()
 @Composable
 fun LoadingPreview() {
-   Loading()
+    Loading()
+}
+
+@Preview()
+@Composable
+fun NoSchoolsFoundPreview() {
+    NoSchoolsFound()
 }

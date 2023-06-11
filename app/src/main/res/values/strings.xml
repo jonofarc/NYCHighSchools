@@ -3,4 +3,6 @@
     <string name="building_code">Building Code: %1$s</string>
     <string name="school_favourite">is this school a favourite</string>
     <string name="sat_score">SAT score: %1$d</string>
+    <string name="no_schools_found">No schools found</string>
+    <string name="loading">Loading please wait...</string>
 </resources>
