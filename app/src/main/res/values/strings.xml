@@ -9,4 +9,7 @@
     <string name="sat_critical_reading_avg">SAT Critical Reading Avg: </string>
     <string name="sat_math_avg">SAT Math Avg: </string>
     <string name="sat_writing_avg">SAT Writing Avg: </string>
+    <string name="phone_number">Phone number: </string>
+    <string name="school_email">Email: </string>
+    <string name="website">website: </string>
 </resources>

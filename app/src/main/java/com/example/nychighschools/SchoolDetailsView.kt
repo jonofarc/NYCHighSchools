@@ -1,5 +1,10 @@
 package com.example.nychighschools
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,20 +17,28 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import com.example.nychighschools.models.School
 
 
@@ -35,6 +48,7 @@ fun SchoolDetails(
     modifier: Modifier, onBackClicked: () -> Unit,
 ) {
     Column() {
+        TopBarWithBackArrow("back", { onBackClicked() })
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSecondary
@@ -42,7 +56,7 @@ fun SchoolDetails(
             modifier = modifier
                 .padding(vertical = 4.dp, horizontal = 8.dp)
                 .shadow(elevation = 8.dp)
-                .clickable { onBackClicked() }
+
         ) {
             CardContentDetails(school)
         }
@@ -53,10 +67,33 @@ fun SchoolDetails(
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarWithBackArrow(
+    title: String,
+    onBackClicked: () -> Unit
+) {
+    TopAppBar(
+        title = {
+            Row(Modifier.padding(start = 8.dp)) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .clickable { onBackClicked() }
+                        .padding(end = 8.dp)
+                )
+                Text(text = title, style = MaterialTheme.typography.titleMedium)
+            }
+        }
+    )
+}
+
 @Composable
 private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
 
+    val context = LocalContext.current
     val satScores = CsvUtils.getSatScores();
     val utils = Utils()
     val satScore = utils.findSatScoresByDbn(satScores, school.dbn)
@@ -104,6 +141,9 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
                     DataRow(stringResource(R.string.sat_writing_avg), satScore.satWritingAvgScore)
                 }
 
+                DataRow(stringResource(R.string.phone_number), school.phoneNumber)
+                DataRow(stringResource(R.string.school_email), school.schoolEmail)
+                HyperLinkDataRow(stringResource(R.string.website), school.website, Modifier.clickable { Utils().openUrlInBrowser(context, school.website) })
                 DataRow(stringResource(R.string.building_code), school.buildingCode)
                 DataRow(stringResource(R.string.dbn), school.dbn)
 
@@ -114,12 +154,14 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
     }
 
+
 }
 
+
 @Composable
-fun DataRow(stringResource: String, data: String) {
+fun DataRow(stringResource: String, data: String, modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
         horizontalArrangement = Arrangement.Start
@@ -139,6 +181,35 @@ fun DataRow(stringResource: String, data: String) {
         )
     }
 }
+
+/**
+ * this probably could be combined into one more customizable DataRow but this aproach is simpler to code for the moment
+ */
+@Composable
+fun HyperLinkDataRow(stringResource: String, data: String, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Text(
+            text = stringResource,
+            modifier = Modifier,
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
+        )
+
+        Text(
+            text = data,
+            modifier = Modifier.padding(start = 8.dp),
+            color = colorResource(id = R.color.hyperlink_blue),
+            style = MaterialTheme.typography.bodySmall,
+            textDecoration = TextDecoration.Underline
+        )
+    }
+}
+
 
 @Preview
 @Composable
