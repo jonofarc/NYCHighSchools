@@ -9,7 +9,7 @@ data class School(
     @SerialName("school_name")
     val schoolName: String = "",
     @SerialName("location")
-    val location: String,
+    val location: String = "",
     @SerialName("building_code")
     val buildingCode: String = "",
 )
