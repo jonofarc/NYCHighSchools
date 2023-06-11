@@ -120,7 +120,28 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
                 satScore?.let { satScore ->
                     Text(
-                        text = stringResource(R.string.sat_score, satScore.satMathAvgScore),
+                        text = stringResource(R.string.number_of_sat_test_takers, satScore.numOfSatTestTakers),
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                    Text(
+                        text = stringResource(R.string.sat_critical_reading_avg, satScore.satCriticalReadingAvgScore),
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                    Text(
+                        text = stringResource(R.string.sat_math_avg, satScore.satMathAvgScore),
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                    Text(
+                        text = stringResource(R.string.sat_writing_avg, satScore.satWritingAvgScore),
                         modifier = modifier,
                         color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodyMedium,
