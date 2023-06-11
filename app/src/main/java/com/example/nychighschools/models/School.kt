@@ -1,13 +1,16 @@
 package com.example.nychighschools.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 
 @Serializable
 data class School(
-
+    @SerialName("school_name")
     val schoolName: String = "",
-
+    @SerialName("location")
+    val location: String,
+    @SerialName("building_code")
     val buildingCode: String = "",
-    val location: String = "",
+)
 
-    )
