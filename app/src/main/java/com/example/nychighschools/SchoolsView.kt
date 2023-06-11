@@ -40,14 +40,18 @@ import com.example.nychighschools.models.School
 
 @Composable
 fun SchoolsView(schools: List<School>, onSchoolSelected: (index: Int) -> Unit) {
-    LazyColumn {
-        itemsIndexed(schools) { index, school ->
-            SchoolCard(school, modifier = Modifier.clickable {
-                //selectedSchool = index;
-                onSchoolSelected(index)
-            })
+    Column() {
+        Composables().CustomizableTopBar(stringResource(R.string.app_title)) { }
+        LazyColumn {
+            itemsIndexed(schools) { index, school ->
+                SchoolCard(school, modifier = Modifier.clickable {
+                    //selectedSchool = index;
+                    onSchoolSelected(index)
+                })
+            }
         }
     }
+
 }
 
 

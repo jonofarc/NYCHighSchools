@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">NYC High Schools</string>
+    <string name="app_title">20230611-JM-NYCSchools</string>
     <string name="building_code">Building Code: </string>
     <string name="dbn">DBN: </string>
     <string name="school_favourite">is this school a favourite</string>

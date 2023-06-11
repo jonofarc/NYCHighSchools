@@ -1,10 +1,5 @@
 package com.example.nychighschools
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,16 +16,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import com.example.nychighschools.models.School
 
 
@@ -48,7 +39,7 @@ fun SchoolDetails(
     modifier: Modifier, onBackClicked: () -> Unit,
 ) {
     Column() {
-        TopBarWithBackArrow("back", { onBackClicked() })
+        Composables().CustomizableTopBar(stringResource(R.string.app_title), icon = Icons.Filled.ArrowBack) { onBackClicked() }
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSecondary
@@ -67,34 +58,13 @@ fun SchoolDetails(
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBarWithBackArrow(
-    title: String,
-    onBackClicked: () -> Unit
-) {
-    TopAppBar(
-        title = {
-            Row(Modifier.padding(start = 8.dp)) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    modifier = Modifier
-                        .clickable { onBackClicked() }
-                        .padding(end = 8.dp)
-                )
-                Text(text = title, style = MaterialTheme.typography.titleMedium)
-            }
-        }
-    )
-}
 
 @Composable
 private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
 
     val context = LocalContext.current
-    val satScores = CsvUtils.getSatScores();
+    val satScores = CsvUtils.getSatScores()
     val utils = Utils()
     val satScore = utils.findSatScoresByDbn(satScores, school.dbn)
 
