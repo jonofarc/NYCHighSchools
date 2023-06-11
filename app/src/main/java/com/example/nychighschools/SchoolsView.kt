@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.nychighschools.models.School
@@ -73,6 +74,7 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
 
     var isFavorite by rememberSaveable { mutableStateOf(false) }
 
+
     Column {
 
 
@@ -88,50 +90,27 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
                     .border(1.5.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(4.dp))
             )
 
-
             Spacer(modifier = Modifier.width(16.dp))
-
-
-
 
             Column {
 
                 Text(
                     text = school.schoolName,
                     modifier = modifier,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                     color = MaterialTheme.colorScheme.secondary,
                 )
 
                 Text(
                     text = school.location,
-                    modifier = modifier,
+                    modifier = Modifier.padding(top = 8.dp),
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
 
 
                     )
 
-
-                Text(
-                    text = stringResource(R.string.building_code, school.buildingCode),
-                    modifier = modifier,
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.bodyMedium,
-
-                    )
-
-                Text(
-                    text = stringResource(R.string.dbn, school.dbn),
-                    modifier = modifier,
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.bodyMedium,
-
-                    )
-
-
-
-
+                DataRow(stringResource(R.string.dbn), school.dbn)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -158,19 +137,20 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
 
 }
 
-@Preview()
+@Preview
 @Composable
 fun SchoolsViewPreview() {
 
     val schools = mutableListOf<School>()
 
-    //A hacky way to get a big list for Dev purposes
-    for (i in 1..2) {
-        schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
-        schools.add(School(schoolName = "Liberation Diploma Plus High School", location = "2865 West 19th Street, Brooklyn, NY 11224 (40.576976, -73.985413)", buildingCode = "K728"))
-        schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)", buildingCode = "K777"))
+    schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
+    schools.add(School(schoolName = "Liberation Diploma Plus High School", location = "2865 West 19th Street, Brooklyn, NY 11224 (40.576976, -73.985413)", buildingCode = "K728"))
+    schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)", buildingCode = "K777"))
 
-    }
+    schools.add(School(schoolName = "Clinton School Writers & Artists, M.S. 260", location = "10 East 15th Street, Manhattan NY 10003 (40.736526, -73.992727)", buildingCode = "M868"))
+    schools.add(School(schoolName = "Liberation Diploma Plus High School", location = "2865 West 19th Street, Brooklyn, NY 11224 (40.576976, -73.985413)", buildingCode = "K728"))
+    schools.add(School(schoolName = "Women's Academy of Excellence", location = "456 White Plains Road, Bronx NY 10473 (40.815043, -73.85607)", buildingCode = "K777"))
+
 
 
     SchoolsView(schools) { }

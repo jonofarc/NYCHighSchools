@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">NYC High Schools</string>
-    <string name="building_code">Building Code: %1$s</string>
-    <string name="dbn">DBN: %1$s</string>
+    <string name="building_code">Building Code: </string>
+    <string name="dbn">DBN: </string>
     <string name="school_favourite">is this school a favourite</string>
     <string name="no_schools_found">No schools found</string>
     <string name="loading">Loading please wait…</string>
-    <string name="number_of_sat_test_takers">Num of SAT Test Takers: %1$s</string>
-    <string name="sat_critical_reading_avg">SAT Critical Reading Avg: %1$s</string>
-    <string name="sat_math_avg">SAT Math Avg: %1$s</string>
-    <string name="sat_writing_avg">SAT Writing Avg: %1$s</string>
+    <string name="number_of_sat_test_takers">Num of SAT Test Takers: </string>
+    <string name="sat_critical_reading_avg">SAT Critical Reading Avg: </string>
+    <string name="sat_math_avg">SAT Math Avg: </string>
+    <string name="sat_writing_avg">SAT Writing Avg: </string>
 </resources>
