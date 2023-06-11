@@ -47,10 +47,10 @@ fun MyApp(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        val csvUtils = CsvUtils()
-        csvUtils.getData(context)
 
-        schools.value = csvUtils.getSchools()
+        CsvUtils.getData(context)
+
+        schools.value = CsvUtils.getSchools()
 
     }
 

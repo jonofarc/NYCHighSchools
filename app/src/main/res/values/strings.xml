@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NYC High Schools</string>
     <string name="building_code">Building Code: %1$s</string>
+    <string name="dbn">DBN: %1$s</string>
     <string name="school_favourite">is this school a favourite</string>
     <string name="sat_score">SAT score: %1$d</string>
     <string name="no_schools_found">No schools found</string>

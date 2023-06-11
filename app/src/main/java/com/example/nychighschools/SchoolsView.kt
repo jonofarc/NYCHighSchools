@@ -112,15 +112,23 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
 
                     )
 
-                if (school.buildingCode.isNotEmpty()) {
-                    Text(
-                        text = stringResource(R.string.building_code, school.buildingCode),
-                        modifier = modifier,
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.bodyMedium,
 
-                        )
-                }
+                Text(
+                    text = stringResource(R.string.building_code, school.buildingCode),
+                    modifier = modifier,
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyMedium,
+
+                    )
+
+                Text(
+                    text = stringResource(R.string.dbn, school.dbn),
+                    modifier = modifier,
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyMedium,
+
+                    )
+
 
 
 

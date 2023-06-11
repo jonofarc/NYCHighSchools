@@ -1,5 +1,6 @@
 package com.example.nychighschools
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -56,6 +57,18 @@ fun SchoolDetails(
 private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
 
+    val satScores = CsvUtils.getSatScores();
+    Log.d("jon", "111111111111111111111111111111111111111111111")
+    Log.d("jon", satScores.toString())
+    val utils = Utils()
+    val satScore = utils.findSatScoresByDbn(satScores, school.dbn)
+    Log.d("jon", satScores.toString())
+
+    Log.d("jon", "222222222222222222222222222222222222222")
+    Log.d("jon", satScore.toString())
+
+
+
     Column {
 
 
@@ -105,13 +118,15 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
                         )
                 }
 
-                Text(
-                    text = stringResource(R.string.sat_score, 1060),
-                    modifier = modifier,
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.bodyMedium,
+                satScore?.let { satScore ->
+                    Text(
+                        text = stringResource(R.string.sat_score, satScore.satMathAvgScore),
+                        modifier = modifier,
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodyMedium,
 
-                    )
+                        )
+                }
 
 
             }

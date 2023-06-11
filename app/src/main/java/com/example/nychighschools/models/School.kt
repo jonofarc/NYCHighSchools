@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class School(
+    @SerialName("dbn")
+    val dbn: String = "",
     @SerialName("school_name")
     val schoolName: String = "",
     @SerialName("location")
