@@ -36,7 +36,7 @@ fun SchoolDetails(
     Column() {
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.background
+                containerColor = MaterialTheme.colorScheme.onSecondary
             ),
             modifier = modifier
                 .padding(vertical = 4.dp, horizontal = 8.dp)
@@ -83,7 +83,7 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
                     text = school.schoolName,
                     modifier = modifier,
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.secondary,
                 )
 
                 Text(
@@ -106,7 +106,7 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
                 }
 
                 Text(
-                    text = stringResource(R.string.sat_score, 1060 ),
+                    text = stringResource(R.string.sat_score, 1060),
                     modifier = modifier,
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,

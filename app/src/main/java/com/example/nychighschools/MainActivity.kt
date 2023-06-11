@@ -1,7 +1,6 @@
 package com.example.nychighschools
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,11 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.nychighschools.csv.CsvFile
 import com.example.nychighschools.models.School
 import com.example.nychighschools.ui.theme.NYCHighSchoolsTheme
 
-const val csvFile = "schools.csv"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +47,10 @@ fun MyApp(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
+        val csvUtils = CsvUtils()
+        csvUtils.getData(context)
 
-        schools.value = Utils().loadCSV(context, csvFile)
+        schools.value = csvUtils.getSchools()
 
     }
 
