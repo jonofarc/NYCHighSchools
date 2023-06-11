@@ -37,28 +37,6 @@ import java.io.InputStreamReader
 class Utils {
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun TopBarWithBackArrow(
-        title: String,
-        onBackClicked: () -> Unit
-    ) {
-        TopAppBar(
-            title = {
-                Row(Modifier.padding(start = 8.dp)) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
-                        modifier = Modifier
-                            .clickable { onBackClicked() }
-                            .padding(end = 8.dp)
-                    )
-                    Text(text = title, style = MaterialTheme.typography.titleMedium)
-                }
-            }
-        )
-    }
-
     fun findSatScoresByDbn(satScoresList: List<SatScores>, dbn: String): SatScores? {
         return satScoresList.find { it.dbn == dbn }
     }
