@@ -14,18 +14,17 @@ import kotlinx.serialization.csv.Csv
 class Utils {
 
 
-    suspend fun loadCSV(): List<School> {
+    suspend fun loadCSV(csvInput: String): List<School> {
         delay(1000)
-        return parseCSV()
+        return parseCSV(csvInput)
     }
 
-    //this function should be updated to recive the csv file so it can be reused with multiple files if needed
     @OptIn(ExperimentalSerializationApi::class)
-    fun parseCSV(): List<School> {
+    fun parseCSV(csvInput: String): List<School> {
 
         val csv = Csv { hasHeaderRecord = true; ignoreUnknownColumns = true }
-        val input = CsvFile().getCsv().trimIndent()
-        val parsed = csv.decodeFromString(ListSerializer(School.serializer()), input)
+
+        val parsed = csv.decodeFromString(ListSerializer(School.serializer()), csvInput.trimIndent())
 
         Log.d("jon", parsed.toString())
 

@@ -15,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.nychighschools.csv.CsvFile
 import com.example.nychighschools.models.School
 import com.example.nychighschools.ui.theme.NYCHighSchoolsTheme
 
@@ -44,7 +45,7 @@ fun MyApp(
     val schools: MutableState<List<School>?> = rememberSaveable { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
-        schools.value = Utils().loadCSV()
+        schools.value = Utils().loadCSV(CsvFile().getCsv())
         // Use the parsed schools list
         Log.d("jon", "2")
     }
