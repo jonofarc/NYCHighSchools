@@ -24,9 +24,6 @@ class Utils {
             currentLikes.add(dbn)
         }
 
-        Log.d("jon", "2222222222222222222222222")
-        Log.d("jon", currentLikes.toString())
-        
 
         val newRawLikes = currentLikes.joinToString(separator = ",")
 
