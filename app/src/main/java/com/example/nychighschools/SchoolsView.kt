@@ -1,5 +1,6 @@
 package com.example.nychighschools
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -40,20 +42,31 @@ import com.example.nychighschools.models.School
 
 @Composable
 fun SchoolsView(schools: List<School>, onSchoolSelected: (index: Int) -> Unit) {
-    Column() {
-        Composables().CustomizableTopBar(stringResource(R.string.app_title)) { }
+    var searchTextState by rememberSaveable { mutableStateOf("") }
+    val filteredSchools = remember(schools, searchTextState) {
+        schools.filter { school ->
+            school.schoolName.contains(searchTextState, ignoreCase = true)
+        }
+    }
+
+    Column {
+        Composables().CustomizableTopBar(
+            title = stringResource(R.string.app_title),
+            searchApplied = { searchText ->
+                searchText?.let {
+                    searchTextState = it
+                }
+            }
+        )
         LazyColumn {
-            itemsIndexed(schools) { index, school ->
+            itemsIndexed(filteredSchools) { index, school ->
                 SchoolCard(school, modifier = Modifier.clickable {
-                    //selectedSchool = index;
                     onSchoolSelected(index)
                 })
             }
         }
     }
-
 }
-
 
 @Composable
 fun SchoolCard(school: School, modifier: Modifier) {
@@ -80,7 +93,10 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val likes = utils.getLikes(context)
 
-    var liked by rememberSaveable { mutableStateOf((likes.contains(school.dbn))) }
+    //  var liked by rememberSaveable { mutableStateOf((likes.contains(school.dbn))) }
+    var liked by remember { mutableStateOf(false) }
+    liked = likes.contains(school.dbn)
+
 
 
     Column {

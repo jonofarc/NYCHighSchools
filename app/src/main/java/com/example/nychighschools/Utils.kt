@@ -4,6 +4,7 @@ package com.example.nychighschools
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import com.example.nychighschools.models.SatScores
 
@@ -23,6 +24,9 @@ class Utils {
             currentLikes.add(dbn)
         }
 
+        Log.d("jon", "2222222222222222222222222")
+        Log.d("jon", currentLikes.toString())
+        
 
         val newRawLikes = currentLikes.joinToString(separator = ",")
 

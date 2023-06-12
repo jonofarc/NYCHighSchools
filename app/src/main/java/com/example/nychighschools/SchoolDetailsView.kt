@@ -39,7 +39,7 @@ fun SchoolDetails(
     modifier: Modifier, onBackClicked: () -> Unit,
 ) {
     Column() {
-        Composables().CustomizableTopBar(stringResource(R.string.app_title), icon = Icons.Filled.ArrowBack) { onBackClicked() }
+        Composables().CustomizableTopBar(stringResource(R.string.app_title), icon = Icons.Filled.ArrowBack, onBackClicked = { onBackClicked() })
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSecondary
