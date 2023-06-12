@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -41,31 +42,17 @@ import com.example.nychighschools.models.School
 
 
 @Composable
-fun SchoolsView(schools: List<School>, onSchoolSelected: (index: Int) -> Unit) {
-    var searchTextState by rememberSaveable { mutableStateOf("") }
-    val filteredSchools = remember(schools, searchTextState) {
-        schools.filter { school ->
-            school.schoolName.contains(searchTextState, ignoreCase = true)
+fun SchoolsView(schools: List<School>, onSchoolSelected: (school: School) -> Unit) {
+
+
+    LazyColumn {
+        items(items = schools) { school ->
+            SchoolCard(school, modifier = Modifier.clickable {
+                onSchoolSelected(school)
+            })
         }
     }
 
-    Column {
-        Composables().CustomizableTopBar(
-            title = stringResource(R.string.app_title),
-            searchApplied = { searchText ->
-                searchText?.let {
-                    searchTextState = it
-                }
-            }
-        )
-        LazyColumn {
-            itemsIndexed(filteredSchools) { index, school ->
-                SchoolCard(school, modifier = Modifier.clickable {
-                    onSchoolSelected(index)
-                })
-            }
-        }
-    }
 }
 
 @Composable
