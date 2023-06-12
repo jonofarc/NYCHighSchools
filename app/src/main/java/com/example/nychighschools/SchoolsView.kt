@@ -1,5 +1,7 @@
 package com.example.nychighschools
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -76,7 +79,11 @@ fun SchoolCard(school: School, modifier: Modifier) {
 private fun CardContent(school: School, modifier: Modifier = Modifier) {
 
 
-    var isFavorite by rememberSaveable { mutableStateOf(false) }
+    val utils = Utils()
+    val context = LocalContext.current
+    val favorites = utils.getFavorites(context)
+
+    var isFavorite by rememberSaveable { mutableStateOf((favorites.contains(school.dbn))) }
 
 
     Column {
@@ -120,16 +127,20 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    IconButton(
-                        onClick = { isFavorite = !isFavorite },
-                        modifier = Modifier
-                    ) {
-                        Icon(
-                            imageVector = if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
-                            contentDescription = stringResource(R.string.school_favourite),
-                            tint = if (isFavorite) Color.Red else Color.Gray
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.favorite),
+                        modifier = Modifier.padding(top = 6.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
+                        contentDescription = stringResource(R.string.school_favourite),
+                        tint = if (isFavorite) Color.Red else Color.Gray,
+                        modifier = Modifier.clickable { isFavorite = !isFavorite
+                            utils.saveOrRemoveFavorite(context = context, dbn = school.dbn) }
+                    )
+
                 }
 
 

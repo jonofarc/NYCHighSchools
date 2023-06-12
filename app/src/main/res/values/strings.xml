@@ -13,4 +13,5 @@
     <string name="phone_number">Phone number: </string>
     <string name="school_email">Email: </string>
     <string name="website">website: </string>
+    <string name="favorite">Favorite School: </string>
 </resources>

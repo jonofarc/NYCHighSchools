@@ -33,8 +33,52 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
+const val favoritesKey = "favoritesKey"
+const val sharedPrefKey = "sharedPrefKey"
 
 class Utils {
+
+
+    fun saveOrRemoveFavorite(context: Context, dbn: String) {
+
+        val currentFavorites = getFavorites(context).toMutableList()
+
+        if (currentFavorites.contains(dbn)) {
+            currentFavorites.remove(dbn)
+        } else {
+            currentFavorites.add(dbn)
+        }
+
+
+        val newRawFavorites = currentFavorites.joinToString(separator = ",")
+
+        saveStringToSharedPreferences(context, favoritesKey, newRawFavorites)
+    }
+
+    fun getFavorites(context: Context): List<String> {
+
+        val favorites = mutableListOf<String>()
+
+        val rawFavorites = getStringFromSharedPreferences(context, favoritesKey) ?: ""
+        val favoritesStrings = rawFavorites.split(",")
+        favorites.addAll(favoritesStrings)
+
+        return favorites
+    }
+
+    // Function to save a string value in SharedPreferences
+    private fun saveStringToSharedPreferences(context: Context, key: String, value: String) {
+        val sharedPreferences = context.getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
+
+    // Function to retrieve a string value from SharedPreferences
+    private fun getStringFromSharedPreferences(context: Context, key: String): String? {
+        val sharedPreferences = context.getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(key, null)
+    }
 
 
     fun findSatScoresByDbn(satScoresList: List<SatScores>, dbn: String): SatScores? {
