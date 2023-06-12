@@ -25,7 +25,7 @@ class UtilsTest {
         val result = utils.findSatScoresByDbn(satScoresList, dbn)
 
         // Assert
-        assertEquals("1100", result?.schoolName)
+        assertEquals("School2", result?.schoolName)
     }
 
     @Test
