@@ -38,6 +38,10 @@ object CsvUtils {
         val schools = mutableListOf<School>()
         val lines = loadCSV(context, schoolsCsvFile)
 
+        /**
+         * this probably doesnt have to be made line by line but in some instances of low memory parsing all the records at the same time created a stack overflow
+         * I think this way is a good way to make sure even large files can be handled
+         */
         for (i in 1 until lines.size) {
             val record = lines[0] + "\n" + lines[i]
             schools.addAll(parseSchoolsCSV(record))
@@ -50,6 +54,11 @@ object CsvUtils {
         val satScores = mutableListOf<SatScores>()
         val lines = loadCSV(context, satScoresCsvFile)
 
+
+        /**
+         * this probably doesnt have to be made line by line but in some instances of low memory parsing all the records at the same time created a stack overflow
+         * I think this way is a good way to make sure even large files can be handled
+         */
         for (i in 1 until lines.size) {
             val record = lines[0] + "\n" + lines[i]
             satScores.addAll(parseSatScoresCSV(record))

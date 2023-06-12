@@ -49,7 +49,7 @@ class Composables {
         defaultSearch: String = "",
     ) {
         var searchText by remember { mutableStateOf(defaultSearch) }
-        
+
 
         TopAppBar(
             title = {
@@ -64,7 +64,7 @@ class Composables {
                         )
                     }
 
-                    Text(text = title, style = MaterialTheme.typography.titleSmall)
+                    Text(text = title, style = MaterialTheme.typography.bodySmall)
                 }
             },
 
