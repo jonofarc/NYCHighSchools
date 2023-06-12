@@ -37,8 +37,7 @@ import com.example.nychighschools.models.School
 
 
 class Composables {
-
-
+    
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun CustomizableTopBar(

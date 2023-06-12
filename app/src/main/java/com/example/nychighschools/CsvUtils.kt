@@ -27,6 +27,10 @@ object CsvUtils {
         return satScores
     }
 
+
+    /**
+     * as CSV files are not on constant change once a parse is done we store the result on schools and satScores lists that way the data is available in a sync way
+     */
     suspend fun getData(context: Context) {
         delay(1000) // Delay for 1 second
 

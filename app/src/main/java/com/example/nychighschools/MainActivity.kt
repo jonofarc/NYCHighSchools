@@ -73,6 +73,11 @@ fun MyApp(
 @Composable
 fun SchoolView(schools: List<School>) {
 
+    /**
+     * probably not the best implementation as the CustomizableTopBar could be shared between both SchoolDetails and SchoolsView
+     * yet i found it a good compromise between complexity and functionality
+     */
+
     var selectedSchool: School? by rememberSaveable { mutableStateOf(null) }
     var searchTextState by rememberSaveable { mutableStateOf("") }
     val filteredSchools = rememberSaveable(searchTextState) {

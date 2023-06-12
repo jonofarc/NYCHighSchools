@@ -38,7 +38,7 @@ fun SchoolDetails(
     school: School,
     modifier: Modifier, onBackClicked: () -> Unit,
 ) {
-    Column() {
+    Column {
         Composables().CustomizableTopBar(stringResource(R.string.app_title), icon = Icons.Filled.ArrowBack, onBackClicked = { onBackClicked() })
         Card(
             colors = CardDefaults.cardColors(
@@ -127,7 +127,9 @@ private fun CardContentDetails(school: School, modifier: Modifier = Modifier) {
 
 }
 
-
+/**
+ * A straight forward reusable row to display the name and data of the schools
+ */
 @Composable
 fun DataRow(stringResource: String, data: String, modifier: Modifier = Modifier) {
     Row(
@@ -153,7 +155,7 @@ fun DataRow(stringResource: String, data: String, modifier: Modifier = Modifier)
 }
 
 /**
- * this probably could be combined into one more customizable DataRow but this aproach is simpler to code for the moment
+ * this probably could be combined into one more customizable DataRow but this approach is a compromise between time and complexity
  */
 @Composable
 fun HyperLinkDataRow(stringResource: String, data: String, modifier: Modifier = Modifier) {
