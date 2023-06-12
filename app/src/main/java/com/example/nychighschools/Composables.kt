@@ -2,6 +2,9 @@ package com.example.nychighschools
 
 
 import android.graphics.drawable.Icon
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -36,7 +39,6 @@ import com.example.nychighschools.models.School
 class Composables {
 
 
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun CustomizableTopBar(
@@ -44,8 +46,10 @@ class Composables {
         icon: ImageVector? = null,
         onBackClicked: (() -> Unit)? = null,
         searchApplied: ((String) -> Unit)? = null,
+        defaultSearch: String = "",
     ) {
-        var searchText by remember { mutableStateOf("") }
+        var searchText by remember { mutableStateOf(defaultSearch) }
+        
 
         TopAppBar(
             title = {
@@ -66,35 +70,35 @@ class Composables {
 
             actions = {
                 if (searchApplied != null)
-                Box(Modifier.fillMaxWidth(0.5f)) {
-                    // Add search field here
-                    TextField(
-                        value = searchText,
-                        onValueChange = {
-                            searchText = it
-                            searchApplied?.let { it(searchText) }
-                                        },
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .fillMaxWidth()
-                            .align(Alignment.CenterStart),
-                        placeholder = { Text(text = "Search") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Filled.Search,
-                                contentDescription = "Search"
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onSearch = {
+                    Box(Modifier.fillMaxWidth(0.5f)) {
+                        // Add search field here
+                        TextField(
+                            value = searchText,
+                            onValueChange = {
+                                searchText = it
+                                searchApplied?.let { it(searchText) }
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .fillMaxWidth()
+                                .align(Alignment.CenterStart),
+                            placeholder = { Text(text = "Search") },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Filled.Search,
+                                    contentDescription = "Search"
+                                )
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onSearch = {
 
-                            }
+                                }
+                            )
                         )
-                    )
-                }
+                    }
             }
         )
     }
@@ -109,6 +113,7 @@ fun CustomizableTopBarPreview() {
 
     Composables().CustomizableTopBar(stringResource(R.string.app_title))
 }
+
 @Preview
 @Composable
 fun CustomizableTopBarWithSearchBarPreview() {

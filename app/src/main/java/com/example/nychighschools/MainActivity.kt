@@ -71,12 +71,6 @@ fun MyApp(
     }
 
 
-
-
-
-
-
-
     Surface(modifier) {
 
         schools.value.let {
@@ -107,7 +101,7 @@ fun MyApp(
                                         searchTextState = it
                                     }
 
-                                }
+                                }, defaultSearch = searchTextState
                             )
                             //  SchoolsView(schools)
                             SchoolsView(filteredSchools) { school ->
