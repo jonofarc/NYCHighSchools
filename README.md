@@ -14,3 +14,11 @@ Create a browser based or native app to provide information on NYC High schools.
 3.	It is up to you to decide what additional information to display
 
 The data used for this project is saved in 2 csv files located in the assets folder
+
+the project was made with Android studdio flamingo and it might be required either flamingo or a newer version to be complied
+as it uses Graddle 8.0
+https://developer.android.com/studio/releases/
+
+
+The project was might trigger NRA on emulators on Mac with ARM chip  
+this behaviour was not replicated on a physical device
