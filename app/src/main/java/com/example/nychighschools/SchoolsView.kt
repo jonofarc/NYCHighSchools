@@ -1,7 +1,5 @@
 package com.example.nychighschools
 
-import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,12 +15,11 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.ThumbUpAlt
+import androidx.compose.material.icons.filled.ThumbUpOffAlt
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -81,9 +78,9 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
 
     val utils = Utils()
     val context = LocalContext.current
-    val favorites = utils.getFavorites(context)
+    val likes = utils.getLikes(context)
 
-    var isFavorite by rememberSaveable { mutableStateOf((favorites.contains(school.dbn))) }
+    var liked by rememberSaveable { mutableStateOf((likes.contains(school.dbn))) }
 
 
     Column {
@@ -127,18 +124,14 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    Text(
-                        text = stringResource(R.string.favorite),
-                        modifier = Modifier.padding(top = 6.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.bodySmall,
-                    )
                     Icon(
-                        imageVector = if (isFavorite) Icons.Filled.Star else Icons.Filled.StarBorder,
+                        imageVector = if (liked) Icons.Default.ThumbUpAlt else Icons.Default.ThumbUpOffAlt,
                         contentDescription = stringResource(R.string.school_favourite),
-                        tint = if (isFavorite) Color.Red else Color.Gray,
-                        modifier = Modifier.clickable { isFavorite = !isFavorite
-                            utils.saveOrRemoveFavorite(context = context, dbn = school.dbn) }
+                        tint = if (liked) MaterialTheme.colorScheme.primary else Color.Gray,
+                        modifier = Modifier.clickable {
+                            liked = !liked
+                            utils.saveOrRemoveLike(context = context, dbn = school.dbn)
+                        }
                     )
 
                 }

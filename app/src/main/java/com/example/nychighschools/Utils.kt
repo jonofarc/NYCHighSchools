@@ -1,69 +1,43 @@
 package com.example.nychighschools
 
 
-import com.example.nychighschools.models.School
-import kotlinx.coroutines.delay
-
-
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.csv.Csv
-
-
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.nychighschools.models.SatScores
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 
-const val favoritesKey = "favoritesKey"
+const val likesKey = "likesKey"
 const val sharedPrefKey = "sharedPrefKey"
 
 class Utils {
 
 
-    fun saveOrRemoveFavorite(context: Context, dbn: String) {
+    fun saveOrRemoveLike(context: Context, dbn: String) {
 
-        val currentFavorites = getFavorites(context).toMutableList()
+        val currentLikes = getLikes(context).toMutableList()
 
-        if (currentFavorites.contains(dbn)) {
-            currentFavorites.remove(dbn)
+        if (currentLikes.contains(dbn)) {
+            currentLikes.remove(dbn)
         } else {
-            currentFavorites.add(dbn)
+            currentLikes.add(dbn)
         }
 
 
-        val newRawFavorites = currentFavorites.joinToString(separator = ",")
+        val newRawLikes = currentLikes.joinToString(separator = ",")
 
-        saveStringToSharedPreferences(context, favoritesKey, newRawFavorites)
+        saveStringToSharedPreferences(context, likesKey, newRawLikes)
     }
 
-    fun getFavorites(context: Context): List<String> {
+    fun getLikes(context: Context): List<String> {
 
-        val favorites = mutableListOf<String>()
+        val likes = mutableListOf<String>()
 
-        val rawFavorites = getStringFromSharedPreferences(context, favoritesKey) ?: ""
-        val favoritesStrings = rawFavorites.split(",")
-        favorites.addAll(favoritesStrings)
+        val rawLikes = getStringFromSharedPreferences(context, likesKey) ?: ""
+        val likesStrings = rawLikes.split(",")
+        likes.addAll(likesStrings)
 
-        return favorites
+        return likes
     }
 
     // Function to save a string value in SharedPreferences
