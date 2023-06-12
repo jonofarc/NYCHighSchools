@@ -110,13 +110,16 @@ private fun CardContent(school: School, modifier: Modifier = Modifier) {
                 )
 
                 Text(
-                    text = school.location,
+                    text = school.getDisplayLocation,
                     modifier = Modifier.padding(top = 8.dp),
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
 
 
                     )
+
+                DataRow(stringResource(R.string.phone_number), school.phoneNumber)
+                HyperLinkDataRow(stringResource(R.string.website), school.website, Modifier.clickable { Utils().openUrlInBrowser(context, school.website) })
 
                 DataRow(stringResource(R.string.dbn), school.dbn)
 

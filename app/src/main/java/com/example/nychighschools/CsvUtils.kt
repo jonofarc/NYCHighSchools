@@ -6,10 +6,12 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.csv.Csv
 import android.content.Context
+import androidx.compose.ui.text.toLowerCase
 import com.example.nychighschools.models.SatScores
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import java.util.Locale
 
 
 const val schoolsCsvFile = "schools.csv"
@@ -51,7 +53,7 @@ object CsvUtils {
             schools.addAll(parseSchoolsCSV(record))
         }
 
-        return schools
+        return schools.sortedBy { it.schoolName.lowercase(Locale.getDefault()) }.toMutableList()
     }
 
     private fun getSatScoresFromCSV(context: Context): List<SatScores> {

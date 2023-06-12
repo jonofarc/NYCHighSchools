@@ -20,5 +20,14 @@ data class School(
     val schoolEmail: String = "",
     @SerialName("website")
     val website: String = "",
-)
+) {
+    val getDisplayLocation: String
+        get() {
+            val displayLocation = location.split("(")
+
+            return displayLocation[0]
+        }
+}
+
+
 
